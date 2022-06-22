@@ -1,6 +1,6 @@
-
-# Ex.No:3 Create Your Own Content Providers to get Contacts details.
-
+### EX NO: 03
+### DATE: 
+# <p align="center">Get Contacts Details</p>
 
 ## AIM:
 
@@ -27,14 +27,15 @@ Step 6: Get contacts details and Display details give in MainActivity file.
 Step 7: Save and run the application.
 
 ## PROGRAM:
+
 ```
 /*
 Program to print the text create your own content providers to get contacts details.
-Developed by: BALAJI N
+Developed by: Balaji N
 Registeration Number : 212220230006
 */
 ```
-## Activitymain.xml
+#### Activity_main.xml
 ```java
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -48,22 +49,22 @@ Registeration Number : 212220230006
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get contacts"
+        android:text="@string/get_contacts"
         android:onClick="btnGetContactPressed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UsingOnClickInXml" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
-## MainActivity.java
+#### MainActivity.java
 ```java
 package com.example.contentprovider;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.PackageManagerCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -83,45 +84,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
-    public void btnGetContactPressed(View v)
-    {
-        getPhoneContact();
-
+    public void btnGetContactPressed(View v){
+        getPhoneContacts();
     }
-    private void getPhoneContact() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 0);
+    private void getPhoneContacts(){
+        if(ContextCompat.checkSelfPermission(this , Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_CONTACTS}, 0) ;
 
         }
-
         ContentResolver contentResolver = getContentResolver();
-        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        Cursor cursor = contentResolver.query(uri, null, null, null, null);
-        Log.i("CONTACT_PROVIDER_DEMO", "TOTAL # Of Contacts :::" + (cursor.getCount()));
-        if (0 <= cursor.getCount()) {
-            while (cursor.moveToNext()) {
+        Uri uri= ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        @SuppressLint("Recycle") Cursor cursor = contentResolver.query(uri, null , null,null,null);
+        Log.i("CONTACT_PROVIDER_DEMO","TOTAL # of Contacts ::: "+ cursor.getCount());
+        if (cursor.getCount() > 0) {
+            while(cursor.moveToNext()){
                 @SuppressLint("Range") String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                String contactNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                @SuppressLint("Range") String contactNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-                Log.i("CONTACT_PROVIDER_DEMO", "CONTACT NAME  :::" + contactName + "    PH #  :::" + contactNumber);
-                ;
-
+                Log.i("CONTACT_PROVIDER_DEMO","Contact Name :::  "+ contactName+"   PH #   :::"+ contactNumber);
             }
         }
-
     }
 
-    }
+}
+
 ```
-## AndroidManifest.xml
+#### AndroidManifest.xml
 ```java
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.contentprovider">
+
     <uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"></uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -142,14 +140,14 @@ public class MainActivity extends AppCompatActivity {
 
 </manifest>
 ```
-## OUTPUT
-![166180286-0a725d78-00ec-4da5-b0a2-c0a6b5b3f18a](https://user-images.githubusercontent.com/75234946/166449571-965639c1-2499-47db-abe0-0f2ed6bd1e3e.png)
 
-![166180298-f578ab12-33ed-41b4-82d3-d99ef3edf808](https://user-images.githubusercontent.com/75234946/166449604-0527a1c4-1c5a-4353-9bc3-4b16d405bd3a.png)
+## OUTPUT:
 
+![image](https://user-images.githubusercontent.com/65499285/163918016-3edce2f0-6b8c-458f-81c8-5714085c0752.png)
+![image](https://user-images.githubusercontent.com/65499285/163917975-46dad8e6-3bf2-4644-aba3-46de3b0fb76b.png)
+![image](https://user-images.githubusercontent.com/65499285/163918038-ab4fa551-09f1-4545-8860-4bd696cab70a.png)
+![image](https://user-images.githubusercontent.com/75235334/166458737-2e183400-06af-40bd-b5f6-95bd4d2d65de.png)
 
+## RESULT:
 
-
-
-## RESULT
 Thus a Simple Android Application create your own content providers to get contacts details using Android Studio is developed and executed successfully.
